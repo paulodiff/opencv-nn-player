@@ -8,8 +8,8 @@ import simple_parser
 
 
 args_prototxt = 'c:/nn/mscoco_label_map.pbtxt'
-args_weights = 'C:/nn/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb'
-args_image = 'c:/nn/kite.jpg'
+args_weights = 'C:/nn/model/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb'
+args_image = 'c:/nn/sample_imgs/kite.jpg'
 
 NUM_CLASSES = 90
 label_map = simple_parser.dict_from_pbtxt_file(args_prototxt)
@@ -64,10 +64,10 @@ with tf.Session() as sess:
             bottom = bbox[2] * rows
             label = "{}: {:.2f}%".format(label_map[classId],	score * 100)
             print(label)
-            cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (255, 10, 10), thickness=2)
-            yoffset = 10
+            cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (255, 10, 10), thickness=1)
+            yoffset = 5
             y2 = y - yoffset if y - yoffset > yoffset else y + yoffset
-            cv.putText(img, label, (int(x), int(y2)), cv.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[classId], 2)
+            cv.putText(img, label, (int(x), int(y2)), cv.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[classId], 1)
 
     sess.close()
     
