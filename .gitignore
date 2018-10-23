@@ -1,0 +1,6 @@
+﻿__pycache__
+model
+*.swp
+*.swo
+*.log
+*.tmp
