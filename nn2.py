@@ -1,3 +1,8 @@
+# OpenCV nn player
+# Usa opencv per aprire immagini video e webcam
+# Usa Tensorflow per inferenza su modelli di rete
+
+
 import numpy as np
 import tensorflow as tf
 import cv2 as cv
@@ -64,10 +69,10 @@ with tf.Session() as sess:
             bottom = bbox[2] * rows
             label = "{}: {:.2f}%".format(label_map[classId],	score * 100)
             print(label)
-            cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (255, 10, 10), thickness=1)
+            cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (255, 10, 10), thickness=2)
             yoffset = 5
             y2 = y - yoffset if y - yoffset > yoffset else y + yoffset
-            cv.putText(img, label, (int(x), int(y2)), cv.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[classId], 1)
+            cv.putText(img, label, (int(x), int(y2)), cv.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[classId], 2)
 
     sess.close()
     
@@ -76,6 +81,6 @@ del sess
 cv.imshow('TensorFlow MobileNet-SSD', img)
 cv.waitKey()
 
-gc.collect()
+gc.collect() # FREE MEMORY
 
 print('End!')

@@ -1,0 +1,269 @@
+item {
+  id: 1
+  name: '1C'
+}
+
+item {
+  id: 2
+  name: '2C'
+}
+
+item {
+  id: 3
+  name: '3C'
+}
+
+item {
+  id: 4
+  name: '4C'
+}
+
+item {
+  id: 5
+  name: '5C'
+}
+
+item {
+  id: 6
+  name: '6C'
+}
+
+item {
+  id: 7
+  name: '7C'
+}
+
+item {
+  id: 8
+  name: '8C'
+}
+
+item {
+  id: 9
+  name: '9C'
+}
+
+item {
+  id: 10
+  name: '10C'
+}
+
+item {
+  id: 11
+  name: 'JC'
+}
+
+item {
+  id: 12
+  name: 'QC'
+}
+
+item {
+  id: 13
+  name: 'KC'
+}
+
+item {
+  id: 14
+  name: '1Q'
+}
+
+item {
+  id: 15
+  name: '2Q'
+}
+
+item {
+  id: 16
+  name: '3Q'
+}
+
+item {
+  id: 17
+  name: '4Q'
+}
+
+item {
+  id: 18
+  name: '5Q'
+}
+
+item {
+  id: 19
+  name: '6Q'
+}
+
+item {
+  id: 20
+  name: '7Q'
+}
+
+item {
+  id: 21
+  name: '8Q'
+}
+
+item {
+  id: 22
+  name: '9Q'
+}
+
+item {
+  id: 23
+  name: '10Q'
+}
+
+item {
+  id: 24
+  name: 'JQ'
+}
+
+item {
+  id: 25
+  name: 'QQ'
+}
+
+item {
+  id: 26
+  name: 'KQ'
+}
+
+item {
+  id: 27
+  name: '1F'
+}
+
+item {
+  id: 28
+  name: '2F'
+}
+
+item {
+  id: 29
+  name: '3F'
+}
+
+item {
+  id: 30
+  name: '4F'
+}
+
+item {
+  id: 31
+  name: '5F'
+}
+
+item {
+  id: 32
+  name: '6F'
+}
+
+item {
+  id: 33
+  name: '7F'
+}
+
+item {
+  id: 34
+  name: '8F'
+}
+
+item {
+  id: 35
+  name: '9F'
+}
+
+item {
+  id: 36
+  name: '10F'
+}
+
+item {
+  id: 37
+  name: 'JF'
+}
+
+item {
+  id: 38
+  name: 'QF'
+}
+
+item {
+  id: 39
+  name: 'KF'
+}
+
+item {
+  id: 40
+  name: '1P'
+}
+
+item {
+  id: 41
+  name: '2P'
+}
+
+item {
+  id: 42
+  name: '3P'
+}
+
+item {
+  id: 43
+  name: '4P'
+}
+
+item {
+  id: 44
+  name: '5P'
+}
+
+item {
+  id: 45
+  name: '6P'
+}
+
+item {
+  id: 46
+  name: '7P'
+}
+
+item {
+  id: 47
+  name: '8P'
+}
+
+item {
+  id: 48
+  name: '9P'
+}
+
+item {
+  id: 49
+  name: '10P'
+}
+
+item {
+  id: 50
+  name: 'JP'
+}
+
+item {
+  id: 51
+  name: 'QP'
+}
+
+item {
+  id: 52
+  name: 'KP'
+}
+
+item {
+  id: 53
+  name: 'M1'
+}
+
+item {
+  id: 54
+  name: 'M2'
+}
