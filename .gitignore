@@ -1,5 +1,8 @@
 ﻿__pycache__
 model
+dataset/dest
+dataset/tmp
+dataset/csv
 *.swp
 *.swo
 *.log

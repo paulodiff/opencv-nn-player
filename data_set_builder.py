@@ -22,9 +22,9 @@ import xml.etree.ElementTree as ET
 
 img_source_folder = 'c:/nn/dataset/source'
 img_out_folder = 'c:/nn/dataset/dest'
-num_immagini_da_generare = 5 # genera x immagini per ogni immagine presente in source
+num_immagini_da_generare = 200 # genera x immagini per ogni immagine presente in source
 
-write_boxed_images = True # write image con box per test
+write_boxed_images = False # write image con box per test
 xml_database_info = 'BurracoPoints'
 
 
@@ -86,11 +86,14 @@ for j, img_path in enumerate(images_list):
     bbs_name = []
 
 
-    for xml_object in root.findall('./object'):
-        bbs_name.append(xml_object.get('name').text)
-        for xml_bndbox in test.findall('stuff'):
-        test.remove(stuff)
-
+    xml_objects = root.findall('./object')
+    for xml_object in xml_objects:
+        print(xml_object.find('name').text)
+        print(xml_object.find('pose').text)
+        print(xml_object.find('truncated').text)
+        print(xml_object.find('difficult').text)
+        
+    #exit()
 
     for bb in root.findall('./object/bndbox'):
         xmin = bb.find('xmin').text
@@ -146,6 +149,12 @@ for j, img_path in enumerate(images_list):
                 before.x1, before.y1, before.x2, before.y2,
                 after.x1, after.y1, after.x2, after.y2)
             )
+
+            # set new data for xml_objects
+            xml_objects[i].find('bndbox').find('xmin').text = str(int(after.x1))
+            xml_objects[i].find('bndbox').find('ymin').text = str(int(after.y1))
+            xml_objects[i].find('bndbox').find('xmax').text = str(int(after.x2))
+            xml_objects[i].find('bndbox').find('ymax').text = str(int(after.y2))
       
         image_before = bbs.draw_on_image(rgb_img, thickness=4)
         image_after = bbs_aug.draw_on_image(image_aug, thickness=4, color=[0, 0, 255])
@@ -170,18 +179,34 @@ for j, img_path in enumerate(images_list):
         xml_database = root.find('./source/database')
         xml_database.text = xml_database_info
 
+        xml_path_tag = root.find('./path')
+        xml_path_tag.text = img_out_folder + '/' + img_out_name
+
+        xml_folder_tag = root.find('./folder')
+        xml_folder_tag.text = img_out_folder 
+
+
         print(img_out_name)
         print(xml_out_name)
 
         print('write img and xml', '{0:05d}'.format(pic_num))
 
-        # tree = ET.ElementTree(xml_annotation)
+        # remove old element object
+        for child in root.findall("object"):
+            root.remove(child)
+
+        # add modified object element  
+        for item in xml_objects:
+            print(item)
+            root.append(item)
+
         et.write( img_out_folder + '/' + xml_out_name)
         
         if write_boxed_images:
             cv2.imwrite(img_out_folder + '/' + img_out_name_boxed, image_after)
 
-        cv2.imwrite(img_out_folder + '/' + img_out_name, image_aug)
+        cv2.imwrite(img_out_folder + '/' + img_out_name, cv2.cvtColor(image_aug, cv2.COLOR_RGB2BGR))   
+        #cv2.imwrite(img_out_folder + '/' + img_out_name, image_aug)
 
         pic_num+=1
     # cv2.waitKey(20)
