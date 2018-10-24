@@ -41,8 +41,8 @@ def main():
     '''
 
    
-    args_input_xml = 'C:/nn/dataset/source'
-    args_output_csv = 'C:/nn/dataset/csv/1C-blu-900x900.csv'
+    args_input_xml = 'C:/nn/dataset/dest'
+    args_output_csv = 'C:/nn/dataset/csv/train.csv'
 
     xml_df = xml_to_csv(args_input_xml)
     xml_df.to_csv(args_output_csv, index=None)

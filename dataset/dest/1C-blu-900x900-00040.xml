@@ -1,7 +1,7 @@
 <annotation>
 	<folder>c:/nn/dataset/dest</folder>
-	<filename>1C-blu-900x900-00040.png</filename>
-	<path>c:/nn/dataset/dest/1C-blu-900x900-00040.png</path>
+	<filename>1C-blu-900x900-00040.jpg</filename>
+	<path>c:/nn/dataset/dest/1C-blu-900x900-00040.jpg</path>
 	<source>
 		<database>BurracoPoints</database>
 	</source>
@@ -17,10 +17,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>351</xmin>
-			<ymin>237</ymin>
-			<xmax>405</xmax>
-			<ymax>332</ymax>
+			<xmin>341</xmin>
+			<ymin>256</ymin>
+			<xmax>392</xmax>
+			<ymax>347</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -29,10 +29,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>481</xmin>
-			<ymin>482</ymin>
-			<xmax>543</xmax>
-			<ymax>576</ymax>
+			<xmin>467</xmin>
+			<ymin>489</ymin>
+			<xmax>526</xmax>
+			<ymax>578</ymax>
 		</bndbox>
 	</object>
 </annotation>

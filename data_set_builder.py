@@ -124,6 +124,7 @@ for j, img_path in enumerate(images_list):
             rotate=(-20, 20), 
             scale=(0.5, 0.9)
         ),
+        iaa.ContrastNormalization((0.5, 2.0), per_channel=0.5),
         
     ])
  

@@ -1,7 +1,7 @@
 <annotation>
 	<folder>c:/nn/dataset/dest</folder>
-	<filename>1C-blu-900x900-00001.png</filename>
-	<path>c:/nn/dataset/dest/1C-blu-900x900-00001.png</path>
+	<filename>1C-blu-900x900-00001.jpg</filename>
+	<path>c:/nn/dataset/dest/1C-blu-900x900-00001.jpg</path>
 	<source>
 		<database>BurracoPoints</database>
 	</source>
