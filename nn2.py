@@ -8,21 +8,21 @@ import tensorflow as tf
 import cv2 as cv
 import gc # free memory
 import simple_parser
+import tensorflow as tf; print('TF version:', tf.__version__)
 
 
 
+args_prototxt = 'c:/nn/mazzo_pascal_label_map.pbtxt'
+args_weights = 'C:/nn/model/train1/frozen_inference_graph.pb'
+args_image = 'c:/nn/sample_imgs/test-panno-verde-900x900.jpg'
 
-args_prototxt = 'c:/nn/mscoco_label_map.pbtxt'
-args_weights = 'C:/nn/model/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb'
-args_image = 'c:/nn/sample_imgs/kite.jpg'
-
-NUM_CLASSES = 90
+NUM_CLASSES = 54
 label_map = simple_parser.dict_from_pbtxt_file(args_prototxt)
 
 print(label_map)
 
 
-len_CLASSES = 90
+len_CLASSES = 54
 
 COLORS = np.random.uniform(0, 255, size=(len_CLASSES, 3))
 

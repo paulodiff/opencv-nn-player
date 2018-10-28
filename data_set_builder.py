@@ -1,11 +1,9 @@
 # data_set_builder with annotation
 # aumenta un data set con annotazioni
 # partendo da alcune immagini già annotate applicando trasformazioni
-# geometriche e rigenerando i file di annotazione
-
+# geometriche e rigenerando i file di annotazione xml
 # nella cartella source devono essere presenti le immagini con annotazioni xml
-
-# accetta solo file .jpg .png
+# accetta solo file .jpg 
 
 import imgaug as ia
 from imgaug import augmenters as iaa
@@ -18,15 +16,15 @@ from skimage import data
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
 
-# img = [data.astronaut(), data.astronaut(), data.astronaut(), data.astronaut()]
+# setup
 
-img_source_folder = 'c:/nn/dataset/source'
-img_out_folder = 'c:/nn/dataset/dest'
-num_immagini_da_generare = 200 # genera x immagini per ogni immagine presente in source
-
+img_source_folder = 'c:/nn/dataset/source' # cartella con immagini e annotazioni da aumentare
+img_out_folder = 'c:/nn/dataset/dest_small' # cartelle di destinazione
+num_immagini_da_generare = 5 # genera x immagini per ogni immagine presente in source
 write_boxed_images = False # write image con box per test
 xml_database_info = 'BurracoPoints'
 
+# start ..
 
 file_list = os.listdir(img_source_folder)
 
@@ -36,62 +34,58 @@ images_list = []
 
 for j, item in enumerate(file_list):
   
-  # filtra solo le immagini 
-  if item.lower().endswith(('.png', '.jpg')):
+  # filtra solo le immagini jpg
+  if item.lower().endswith(('.pngXX', '.jpg')):
     img_path = img_source_folder + '/' + item
     images_list.append(img_path)
 
-
-print(images_list)    
+# print(images_list)    
 
 pic_num=1
 num_of_image_to_generate = num_immagini_da_generare
+image_number = len(images_list)
 
 # loop sulla lista con le trasformazioni
 # legge il file .xml per la posizione VOC
 
 for j, img_path in enumerate(images_list):
  
-    print('img_path:', img_path)
+    pic_num=1
+    #print('img_path:', img_path)
     
     image = cv2.imread(img_path, cv2.IMREAD_COLOR)
-    print(image.shape)
+    #print(image.shape)
       
     if image is None: ## Check for invalid input
       print("ERROR: Could not open or find the image", img_path)
     
-    # plt.imshow(image)
-    # img = cv2.imread(img_path, 1)
-    # images[idx, :, :, :] = img
-        
     b,g,r = cv2.split(image)
-    
     rgb_img = cv2.merge([r,g,b])
 
-    # read xml file
+    # read xml file con VOC - annotazioni
     xml_path = img_path[:-4] + '.xml'
 
+    # split filename path ed estensione
     fname, fextension = os.path.splitext(img_path)
     fpath, fname2 = os.path.split(fname)
-    print(fpath, fname, fname2, fextension)
-
-    print('xml_path:', xml_path)
+    #print(fpath, fname, fname2, fextension)
+    #print('xml_path:', xml_path)
 
     et = ET.parse(xml_path)
-    print(et)
+    #print(et)
     root = et.getroot()
-    print(root.tag)
+    #print(root.tag)
     
     bbs1 = []
     bbs_name = []
 
-
     xml_objects = root.findall('./object')
-    for xml_object in xml_objects:
-        print(xml_object.find('name').text)
-        print(xml_object.find('pose').text)
-        print(xml_object.find('truncated').text)
-        print(xml_object.find('difficult').text)
+
+    #for xml_object in xml_objects:
+    #    print(xml_object.find('name').text)
+    #    print(xml_object.find('pose').text)
+    #    print(xml_object.find('truncated').text)
+    #    print(xml_object.find('difficult').text)
         
     #exit()
 
@@ -100,7 +94,7 @@ for j, img_path in enumerate(images_list):
         xmax = bb.find('xmax').text
         ymin = bb.find('ymin').text
         ymax = bb.find('ymax').text
-        print(xmin, ymin, xmax, ymax)
+        # print(xmin, ymin, xmax, ymax)
         bbs1.append(ia.BoundingBox(x1=int(xmin), y1=int(ymin), x2=int(xmax), y2=int(ymax) ) )
 
     # remove object node
@@ -109,7 +103,7 @@ for j, img_path in enumerate(images_list):
 
     bbs = ia.BoundingBoxesOnImage(bbs1,shape=rgb_img.shape) 
 
-    print(bbs)
+    #print(bbs)
   
     sometimes = lambda aug: iaa.Sometimes(0.5, aug)
     
@@ -125,12 +119,11 @@ for j, img_path in enumerate(images_list):
             scale=(0.5, 0.9)
         ),
         iaa.ContrastNormalization((0.5, 2.0), per_channel=0.5),
-        
     ])
  
-    
     # seq_det = seq
-  
+    print('start augment ' + img_path + ' (' + str(j + 1) + '/' + str(image_number) + ')')
+
     for x in range(num_of_image_to_generate):
       
         seq_det = seq.to_deterministic()
@@ -140,16 +133,16 @@ for j, img_path in enumerate(images_list):
     
         # print coordinates before/after augmentation (see below)
         # use .x1_int, .y_int, ... to get integer coordinates
-        print('BB for :', x)
+        #print('BB for :', x)
         # in case of multiple BB's
         for i in range(len(bbs.bounding_boxes)):
             before = bbs.bounding_boxes[i]
             after = bbs_aug.bounding_boxes[i]
-            print("BB %d: (%.4f, %.4f, %.4f, %.4f) -> (%.4f, %.4f, %.4f, %.4f)" % (
-                i,
-                before.x1, before.y1, before.x2, before.y2,
-                after.x1, after.y1, after.x2, after.y2)
-            )
+            #print("BB %d: (%.4f, %.4f, %.4f, %.4f) -> (%.4f, %.4f, %.4f, %.4f)" % (
+            #    i,
+            #    before.x1, before.y1, before.x2, before.y2,
+            #    after.x1, after.y1, after.x2, after.y2)
+            #)
 
             # set new data for xml_objects
             xml_objects[i].find('bndbox').find('xmin').text = str(int(after.x1))
@@ -186,11 +179,8 @@ for j, img_path in enumerate(images_list):
         xml_folder_tag = root.find('./folder')
         xml_folder_tag.text = img_out_folder 
 
-
-        print(img_out_name)
-        print(xml_out_name)
-
-        print('write img and xml', '{0:05d}'.format(pic_num))
+        # print(img_out_name)
+        # print(xml_out_name)
 
         # remove old element object
         for child in root.findall("object"):
@@ -198,7 +188,7 @@ for j, img_path in enumerate(images_list):
 
         # add modified object element  
         for item in xml_objects:
-            print(item)
+            # print(item)
             root.append(item)
 
         et.write( img_out_folder + '/' + xml_out_name)
@@ -210,9 +200,10 @@ for j, img_path in enumerate(images_list):
         #cv2.imwrite(img_out_folder + '/' + img_out_name, image_aug)
 
         pic_num+=1
-    # cv2.waitKey(20)
+        # cv2.waitKey(20)
+    print('augmented! ' + str(pic_num) + ' for ' + img_path)
 
-
+print('End!')
 exit()
 # ---------------------------------------------------------------------
 
