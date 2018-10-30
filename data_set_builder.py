@@ -4,6 +4,7 @@
 # geometriche e rigenerando i file di annotazione xml
 # nella cartella source devono essere presenti le immagini con annotazioni xml
 # accetta solo file .jpg 
+# per salvare le immagini uso PIL per ovviare ad alcuni errori sulla lettura JPG in TFRecord
 
 import imgaug as ia
 from imgaug import augmenters as iaa
@@ -15,12 +16,13 @@ from scipy import misc
 from skimage import data
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as ET
+import PIL.Image
 
 # setup
 
 img_source_folder = 'c:/nn/dataset/source' # cartella con immagini e annotazioni da aumentare
-img_out_folder = 'c:/nn/dataset/dest_small' # cartelle di destinazione
-num_immagini_da_generare = 5 # genera x immagini per ogni immagine presente in source
+img_out_folder = 'c:/nn/dataset/dest_100' # cartelle di destinazione
+num_immagini_da_generare = 100 # genera x immagini per ogni immagine presente in source
 write_boxed_images = False # write image con box per test
 xml_database_info = 'BurracoPoints'
 
@@ -52,15 +54,17 @@ for j, img_path in enumerate(images_list):
  
     pic_num=1
     #print('img_path:', img_path)
-    
+
+    # using cv2    
     image = cv2.imread(img_path, cv2.IMREAD_COLOR)
-    #print(image.shape)
-      
-    if image is None: ## Check for invalid input
-      print("ERROR: Could not open or find the image", img_path)
-    
     b,g,r = cv2.split(image)
     rgb_img = cv2.merge([r,g,b])
+
+    # using PIL
+    # im = PIL.Image.open(img_path)
+    # print(im.size)
+    # rgb_img = im.convert('RGB')
+
 
     # read xml file con VOC - annotazioni
     xml_path = img_path[:-4] + '.xml'
@@ -102,6 +106,7 @@ for j, img_path in enumerate(images_list):
         root.remove(child)
 
     bbs = ia.BoundingBoxesOnImage(bbs1,shape=rgb_img.shape) 
+    # bbs = ia.BoundingBoxesOnImage(bbs1,shape=im.size) 
 
     #print(bbs)
   
@@ -196,8 +201,11 @@ for j, img_path in enumerate(images_list):
         if write_boxed_images:
             cv2.imwrite(img_out_folder + '/' + img_out_name_boxed, image_after)
 
-        cv2.imwrite(img_out_folder + '/' + img_out_name, cv2.cvtColor(image_aug, cv2.COLOR_RGB2BGR))   
-        #cv2.imwrite(img_out_folder + '/' + img_out_name, image_aug)
+        # cv2.imwrite(img_out_folder + '/' + img_out_name, cv2.cvtColor(image_aug, cv2.COLOR_RGB2BGR))  
+        jpeg_file_name = img_out_folder + '/' + img_out_name;
+        new_img = PIL.Image.fromarray(image_aug) 
+        new_img.save(jpeg_file_name, format="JPEG", quality=100)
+        # cv2.imwrite(img_out_folder + '/' + img_out_name, image_aug)
 
         pic_num+=1
         # cv2.waitKey(20)
