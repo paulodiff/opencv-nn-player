@@ -20,8 +20,8 @@ import PIL.Image
 
 # setup
 
-img_source_folder = 'c:/nn/dataset/source' # cartella con immagini e annotazioni da aumentare
-img_out_folder = 'c:/nn/dataset/dest_100' # cartelle di destinazione
+img_source_folder = 'c:/nn/dataset/source_1_label' # cartella con immagini e annotazioni da aumentare
+img_out_folder = 'c:/nn/dataset/dest_100_1_label' # cartelle di destinazione
 num_immagini_da_generare = 100 # genera x immagini per ogni immagine presente in source
 write_boxed_images = False # write image con box per test
 xml_database_info = 'BurracoPoints'

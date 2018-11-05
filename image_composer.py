@@ -7,9 +7,9 @@ import os
 import numpy as np
 import cv2
 
-xml_voc_template  = 'C:/nn/dataset/tmp/template.xml'
+xml_voc_template  = 'C:/nn/sample_imgs/template1.xml'
 img_source_folder = 'c:/nn/dataset/mazzo_bicycle'
-img_out_folder = 'c:/nn/dataset/source'
+img_out_folder = 'c:/nn/dataset/source_1_label'
 num_immagini_da_generare = 200 # genera x immagini per ogni immagine presente in source
 write_boxed_images = False # write image con box per test
 xml_database_info = 'BurracoPoints'
